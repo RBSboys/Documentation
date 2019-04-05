@@ -1,0 +1,396 @@
+#include <kipr/botball.h>
+
+void claw_down_water();
+void claw_up_water();
+void tillbump();
+void water_basket();
+void till_blackline();
+void till_blackline2();
+void till_blackline3();
+void turn_right();
+void turn_left();
+void blackturn();
+void next();
+void close();
+void three_water();
+void water_basket_return();
+void single_water_up();
+void single_water_down();
+void single_water();
+void supplies_up();
+void supplies_down();
+void supplies();
+void supplies_basket();
+void supplies_basket_return();
+void combo();
+void up();
+void down();
+void adjust_self();
+void five();
+void blackline();
+int main()
+{
+    create_connect();
+    enable_servo(0);
+    enable_servo(1);
+    enable_servo(2);
+    set_servo_position(0,500);
+    set_servo_position(1,2000);
+    set_servo_position(2,1400);
+    adjust_self();
+    turn_left();
+    create_drive_direct(100,100);
+    msleep(800);
+    up();
+    till_blackline2();
+    msleep(10);
+    turn_right();
+    msleep(10);
+    adjust_self();
+    till_blackline3();
+    msleep(10);
+    create_drive_direct(150,150);
+    msleep(300);
+    blackturn();
+    create_drive_direct(-100,100);
+    msleep(200);
+    create_stop();
+    msleep(100);
+    single_water();
+    supplies();
+    msleep(500);
+    next();
+    set_servo_position(1,2000);
+    create_stop();
+    msleep(200);
+    single_water();
+    supplies();
+    msleep(500);
+    set_servo_position(1,2000);
+    next();
+    create_stop();
+    msleep(200);
+    single_water();
+    supplies();
+    msleep(500);
+    set_servo_position(1,2000);
+    next();
+    create_stop();
+    msleep(200);
+    single_water();
+    supplies();
+    set_servo_position(0,1800);
+    set_servo_position(1,2000);
+    tillbump();
+    create_drive_direct(-100,-100);
+    msleep(1000);
+    turn_right();
+    turn_right();
+    adjust_self();
+    five();
+
+    return 0;
+}
+// 1510 when basket
+void claw_down_water()
+{
+    enable_servo(0);
+    set_servo_position(0,1600);   
+    water_basket_return();
+    set_servo_position(1,2000);
+
+}
+void claw_up_water()
+{
+    down();
+    set_servo_position(1,2000);
+    set_servo_position(0,40);
+    msleep(1000);
+    close(); 
+    msleep(1000);
+    up();
+    water_basket();
+    ao();
+    msleep(500);
+    set_servo_position(0,1600);
+    set_servo_position(1,1700);
+}
+void water_basket()
+{
+    cmpc(0);
+    while (gmpc(0) <= 400)
+    {
+        mav(0,200);
+    }
+    ao();
+}
+void supplies_basket()
+{
+    cmpc(0);
+    while (gmpc(0) >= -550)
+    {
+        mav(0,-200);
+    }
+    ao();
+}
+void till_blackline()
+{
+    while (get_create_rfcliff_amt()>=1500)
+    {
+        create_drive_direct(100,100);
+    }
+
+} 
+void till_blackline2()
+{
+    while (get_create_lcliff_amt()>=1500)
+    {
+        create_drive_direct(100,100);
+    }
+
+} 
+void till_blackline3()
+{
+    while (get_create_rcliff_amt()>=1500)
+    {
+        create_drive_direct(100,100);
+    }
+
+} 
+void turn_right()
+{    
+    set_create_total_angle(0);    
+    while (get_create_total_angle()>=-85)    
+    {    
+        create_drive_direct(100,-100); 
+        msleep(100);
+    }   
+
+}   
+void turn_left()
+{    
+    set_create_total_angle(0);    
+    while (get_create_total_angle()<=90)    
+    {    
+        create_drive_direct(-200,200); 
+    }   
+
+}       
+void next()
+{
+    set_create_distance(0);
+    while (get_create_distance()<=345.248)
+    {
+        if(get_create_lfcliff_amt()<=1500)
+        {
+            create_drive_direct(100,200);
+            msleep(100);
+        }
+        else if(get_create_rfcliff_amt()<=1500)
+        {
+            create_drive_direct(200,100);  
+            msleep(100);  
+        }
+        else
+        {
+            create_drive_direct(100,100);
+            msleep(100);
+        }
+    } 
+}    
+void three_water()
+{    
+    claw_up_water();  
+    msleep(1000);
+    claw_down_water();
+} 
+void single_water_up()
+{
+    down();
+    set_servo_position(1,2000);
+    set_servo_position(0,600);
+    msleep(2000);
+    close(); 
+    msleep(2000);
+    up();
+    msleep(1000);
+    water_basket();
+    ao();
+    msleep(1000);
+    set_servo_position(0,1680);
+    set_servo_position(1,2000);
+}
+void single_water_down()
+{
+    enable_servo(0);
+    set_servo_position(0,1600);   
+    water_basket_return();
+    ao();
+    msleep(500);
+
+}
+void single_water()
+{
+    single_water_up();
+    msleep(1000);
+    single_water_down();
+}
+void supplies_up()
+{
+    down();
+    set_servo_position(1,2000);
+    set_servo_position(0,500);
+    set_servo_position(0,400);
+    msleep(1000);
+    set_servo_position(1,1345); 
+    msleep(1000);
+    up();
+    set_servo_position(0,1650);
+    msleep(1000);
+    supplies_basket();
+    ao();
+    msleep(500);
+    set_servo_position(0,1600);
+    set_servo_position(1,2000);
+}
+void supplies_down()
+{
+    enable_servo(0);
+    set_servo_position(0,1600);   
+    supplies_basket_return();
+    ao();
+    msleep(100);
+
+}
+void supplies()
+{
+    supplies_up();
+    msleep(1000);
+    supplies_down();
+}
+void water_basket_return()
+{
+    while (gmpc(0) >=25)
+    {
+        mav(0,-200);
+    }
+}
+void supplies_basket_return()
+{
+    while (gmpc(0) <=-25)
+    {
+        mav(0,200);
+    }
+}
+void combo()
+{
+    single_water();
+    msleep(500);
+    supplies();
+    msleep(500);
+    turn_right();
+    msleep(500);
+    three_water();
+}
+void up()
+{
+    enable_servo(0);
+    int counter = 500;
+    set_servo_position(0,counter);
+
+    while (counter<=1700)
+    {
+        msleep(100);
+        counter = counter + 100;
+        set_servo_position(0,counter);
+    }
+}
+void down()
+{
+    enable_servo(0);
+    int strike = 1550;
+    set_servo_position(0,strike);
+    while (strike>=600)
+    {
+        msleep(100);
+        strike = strike -100;
+        set_servo_position(0,strike);
+    }
+}
+void adjust_self()
+{
+    create_drive_direct(-100,-100);
+    msleep(2000);
+    create_drive_direct(100,100);
+    msleep(600);
+}
+void close()
+{
+    enable_servo(1);
+    int water = 2000;
+    set_servo_position(1,water);
+    while (water>=1250)
+    {
+        msleep(100);
+        water = water -100;
+        set_servo_position(1,water);
+    }
+}
+void blackturn()
+{
+    while (get_create_lfcliff_amt()>=1500)
+    {
+        create_drive_direct(100,-100);
+    }
+}
+void tillbump()
+{
+    while (get_create_rbump() == 0)
+    {
+        if(get_create_lfcliff_amt()<=1500)
+        {
+            create_drive_direct(100,200);
+            msleep(100);
+        }
+        else if(get_create_rfcliff_amt()<=1500)
+        {
+            create_drive_direct(200,100);  
+            msleep(100);  
+        }
+        else
+        {
+            create_drive_direct(100,100);
+            msleep(100);
+        }
+    }
+
+}
+void five()
+{
+    set_create_distance(0);
+    while (get_create_distance()<=125)
+    {
+        create_drive_direct(100,100);
+    }
+}
+void blackline()
+{
+    while (get_create_distance()<=345.248)
+    {
+        if(get_create_lfcliff_amt()<=1500)
+        {
+            create_drive_direct(100,200);
+            msleep(100);
+        }
+        else if(get_create_rfcliff_amt()<=1500)
+        {
+            create_drive_direct(200,100);  
+            msleep(100);  
+        }
+        else
+        {
+            create_drive_direct(100,100);
+            msleep(100);
+        }
+    } 
+}
