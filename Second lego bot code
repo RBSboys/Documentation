@@ -1,0 +1,185 @@
+#include <kipr/botball.h>
+void till_blackline();
+void turn_left();
+void turn_right();
+void distance();
+void distance2();
+void distance3();
+void distance4();
+void turn180();
+void distance5();
+void distance6();
+void distance7();
+void detect_building();
+int main()
+{
+    mav(0,500);
+    mav(1,500);
+    msleep(5000);
+    turn_left();
+    till_blackline();
+    mav(0,-1000);
+    mav(1,-1000);
+    msleep(5000);
+    till_blackline();
+    mav(0,-1000);
+    mav(1,1000);
+    msleep(400);
+    distance();
+    turn_right();
+    enable_servos();
+    set_servo_position(0,1000);
+    detect_building();
+    set_servo_position(1,1000);
+    distance3();
+    set_servo_position(0,2000);
+    set_servo_position(1,1900);
+    distance4();
+    turn_left();
+    detect_building();
+    set_servo_position(0,1000);
+    set_servo_position(1,1000);
+    distance3();
+    set_servo_position(0,2000);
+    set_servo_position(1,1900);
+    distance4();
+    turn180();
+    distance5();
+    set_servo_position(1,1000);
+    distance4();
+    turn180();
+    mav(0,1000);
+    mav(1,1000);
+    msleep(1000);
+    till_blackline();
+    turn_left();
+    distance6();
+    turn_right();
+    
+    
+    
+
+
+
+
+
+    return 0;
+}
+
+
+
+
+void till_blackline()
+{
+
+    while (analog(1)<=3700)  // move straight untill the blackline
+    {
+        mav(1,1000);
+        mav(0,1000);
+
+
+    }
+}
+void turn_left()
+{
+    mav(0,1000);
+    mav(1,-1000);
+    msleep(1600);    
+}
+void turn_right()
+{
+    mav(0,-1000);
+    mav(1,1000);
+    msleep(1600); 
+}
+void distance()
+{
+    clear_motor_position_counter(0);
+    clear_motor_position_counter(1);
+    while (gmpc(0) >= 6000)    
+    {
+        mav(0,900);
+        mav(1,1000);
+    }
+}
+void distance2()
+{
+    clear_motor_position_counter(0);
+    clear_motor_position_counter(1);
+    while (gmpc(0) <= 6000)    
+    {
+        mav(0,1000);
+        mav(1,1000);
+    }
+}
+void distance3()
+{
+    clear_motor_position_counter(0);
+    clear_motor_position_counter(1);
+    while (gmpc(0) <= 6000)    
+    {
+        mav(0,1000);
+        mav(1,1000);
+    }
+}
+    void distance4()
+    {
+        clear_motor_position_counter(0);
+        clear_motor_position_counter(1);
+        while (gmpc(0) <= 6000)    
+        {
+            mav(0,-1000);
+            mav(1,-1000);
+
+        }
+    }
+    void turn180()
+    {
+        mav(0,-1000);
+        mav(1,1000);
+        msleep(3200);
+    }
+void distance5()
+{
+    clear_motor_position_counter(0);
+    clear_motor_position_counter(1);
+    while (gmpc(0) <= 5500)    
+    {
+        mav(0,1000);
+        mav(1,1000);
+    }
+}
+void distance6()
+{
+clear_motor_position_counter(0);
+    clear_motor_position_counter(1);
+    while (gmpc(0) <= 6000)    
+    {
+        mav(0,1000);
+        mav(1,1000);
+    }
+}
+void distance7()
+    {
+clear_motor_position_counter(0);
+    clear_motor_position_counter(1);
+    while (gmpc(0) <= 3600)    
+    {
+        mav(0,1000);
+        mav(1,1000);
+    }
+}
+    void detect_building()
+        { 
+            if(analog(2)<=1050)
+        
+            {
+                turn_right();
+            }    
+            else
+            {
+                mav(0,1000);
+                mav(1,1000);
+            }
+            
+        }
